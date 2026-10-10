@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Planos Olympus AI - Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: linear-gradient(135deg, #0b1020 0%, #1a1f3a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #e5edf9;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .logo-premium {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .logo-mark {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            color: white;
+            font-weight: 800;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #9aa9c2;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .plan-card {
+            background: rgba(17, 24, 39, 0.5);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 24px;
+            padding: 40px 32px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), transparent);
+        }
+
+        .plan-card:hover {
+            border-color: rgba(139, 92, 246, 0.5);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.15);
+        }
+
+        .plan-card.featured {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(124, 58, 237, 0.05));
+            border-color: rgba(139, 92, 246, 0.4);
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 1024px) {
+            .plan-card.featured {
+                grid-column: span 1;
+                transform: scale(1);
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .plan-desc {
+            color: #9aa9c2;
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .billing-period {
+            color: #9aa9c2;
+            font-size: 0.9rem;
+            margin-bottom: 28px;
+        }
+
+        .features {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .features li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            color: #9aa9c2;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .features li::before {
+            content: '✓';
+            color: #8b5cf6;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .features li:last-child {
+            border-bottom: none;
+        }
+
+        .cta-button {
+            width: 100%;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .cta-secondary {
+            background: rgba(139, 92, 246, 0.1);
+            color: #a78bfa;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .cta-secondary:hover {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 16, 32, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-modal.active {
+            display: flex;
+        }
+
+        .payment-content {
+            background: linear-gradient(135deg, #111827, #0f1724);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 24px;
+            padding: 48px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            color: #e5edf9;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .close-button:hover {
+            background: rgba(139, 92, 246, 0.2);
+        }
+
+        .payment-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .payment-subtitle {
+            color: #9aa9c2;
+            margin-bottom: 32px;
+        }
+
+        .qr-section {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .qr-code {
+            width: 280px;
+            height: 280px;
+            background: white;
+            border-radius: 16px;
+            padding: 12px;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .pix-key {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .pix-key-label {
+            color: #9aa9c2;
+            font-size: 0.9rem;
+        }
+
+        .pix-key-value {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: #e5edf9;
+        }
+
+        .copy-button {
+            background: rgba(139, 92, 246, 0.2);
+            border: none;
+            color: #a78bfa;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: 0.2s;
+            margin-left: 10px;
+        }
+
+        .copy-button:hover {
+            background: rgba(139, 92, 246, 0.3);
+        }
+
+        .payment-details {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #9aa9c2;
+        }
+
+        .detail-value {
+            color: #e5edf9;
+            font-weight: 600;
+        }
+
+        .instruction {
+            background: rgba(34, 197, 94, 0.1);
+            border-left: 3px solid #22c55e;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            color: #86efac;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .instruction strong {
+            color: #22c55e;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .payment-content {
+                padding: 32px 24px;
+            }
+
+            .qr-code {
+                width: 240px;
+                height: 240px;
+            }
+
+            .plan-card.featured {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-premium">
+                <div class="logo-mark">O</div>
+                <h2 style="font-size: 1.3rem; font-weight: 800;">Olympus AI</h2>
+            </div>
+            <h1>Planos Premium</h1>
+            <p>Desbloqueie todo o poder da IA com recursos avançados</p>
+        </div>
+
+        <div class="plans-grid">
+            <div class="plan-card">
+                <div class="badge">Gratuito</div>
+                <div class="plan-name">Essencial</div>
+                <div class="plan-desc">Perfeito para começar</div>
+                <div class="price">Grátis</div>
+                <div class="billing-period">Para sempre</div>
+                <ul class="features">
+                    <li>Chat básico com IA</li>
+                    <li>Memória limitada (5 mensagens)</li>
+                    <li>Respostas genéricas</li>
+                    <li>Interface principal</li>
+                </ul>
+                <button class="cta-button cta-secondary">Já Usando</button>
+            </div>
+
+            <div class="plan-card featured">
+                <div class="badge" style="background: linear-gradient(135deg, #22c55e, #16a34a);">Mais Popular</div>
+                <div class="plan-name">Premium</div>
+                <div class="plan-desc">Acesso completo à IA Olympus</div>
+                <div class="price">R$ 25</div>
+                <div class="billing-period">2 meses de acesso</div>
+                <ul class="features">
+                    <li>Memória de conversa ilimitada</li>
+                    <li>Respostas contextuais avançadas</li>
+                    <li>Sem limite de requisições</li>
+                    <li>Prioridade no processamento</li>
+                    <li>Suporte via chat</li>
+                    <li>Novas features premium</li>
+                </ul>
+                <button class="cta-button cta-primary" onclick="openPaymentModal()">Adquirir Premium</button>
+            </div>
+
+            <div class="plan-card">
+                <div class="badge">Profissional</div>
+                <div class="plan-name">Enterprise</div>
+                <div class="plan-desc">Para equipes e negócios</div>
+                <div class="price">Personalizado</div>
+                <div class="billing-period">Sob demanda</div>
+                <ul class="features">
+                    <li>Tudo do Premium +</li>
+                    <li>API customizada</li>
+                    <li>Múltiplos usuários</li>
+                    <li>Integração em sistemas</li>
+                    <li>Suporte dedicado</li>
+                </ul>
+                <button class="cta-button cta-secondary" onclick="alert('Entre em contato: italoarjs@gmail.com')">Entrar em Contato</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="paymentModal" class="payment-modal">
+        <div class="payment-content">
+            <button class="close-button" onclick="closePaymentModal()">✕</button>
+            
+            <div class="payment-title">Pagamento Premium</div>
+            <div class="payment-subtitle">Escaneie o QR Code ou copie a chave PIX</div>
+
+            <div class="payment-details">
+                <div class="detail-row">
+                    <span class="detail-label">Plano</span>
+                    <span class="detail-value">Premium - 2 Meses</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Valor</span>
+                    <span class="detail-value">R$ 25,00</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Validade</span>
+                    <span class="detail-value">60 dias</span>
+                </div>
+            </div>
+
+            <div class="qr-section">
+                <div class="qr-code" id="qrCodeContainer"></div>
+                <p style="color: #9aa9c2; font-size: 0.9rem; margin-top: 12px;">Abra seu app de banco e escaneie</p>
+            </div>
+
+            <div class="pix-key">
+                <div>
+                    <div class="pix-key-label">Chave PIX (Email)</div>
+                    <div class="pix-key-value">italoarjs@gmail.com</div>
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('italoarjs@gmail.com')">Copiar</button>
+            </div>
+
+            <div class="instruction">
+                <strong>Como pagar:</strong><br>
+                1. Abra seu aplicativo de banco<br>
+                2. Vá para a seção PIX<br>
+                3. Escaneie o QR Code ou copie a chave<br>
+                4. Insira o valor de R$ 25,00<br>
+                5. Confirme a transação<br>
+                6. Seu acesso será ativado em segundos!
+            </div>
+
+            <button class="cta-button cta-primary" onclick="completePayment()">Já Fiz o Pagamento</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        const PIX_KEY = "italoarjs@gmail.com";
+        const PAYMENT_VALUE = "25.00";
+        const MERCHANT_NAME = "Olympus AI";
+        const MERCHANT_CITY = "Sao Paulo";
+
+        function generatePixQRCode() {
+            const pixString = `00020126580014br.gov.bcb.pix0136italoarjs@gmail.com52040000530398654061${PAYMENT_VALUE.replace('.', '')}5303986540610503***63041D3D`;
+            
+            const qrCodeContainer = document.getElementById('qrCodeContainer');
+            qrCodeContainer.innerHTML = '';
+            
+            new QRCode(qrCodeContainer, {
+                text: "00020126580014br.gov.bcb.pix0136italoarjs@gmail.com52040000530398654061${PAYMENT_VALUE.replace('.', '')}5303986540610503***63041D3D",
+                width: 256,
+                height: 256,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        function openPaymentModal() {
+            document.getElementById('paymentModal').classList.add('active');
+            generatePixQRCode();
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Chave PIX copiada com sucesso!');
+            }).catch(() => {
+                alert('Erro ao copiar. Tente novamente.');
+            });
+        }
+
+        function completePayment() {
+            alert('✅ Obrigado! Seu pagamento foi registrado.\n\nVocê receberá um email em breve com suas credenciais de acesso.\n\nEmail: italoarjs@gmail.com');
+            closePaymentModal();
+            // Redirecionar para dashboard após 2 segundos
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
+        }
+
+        // Fechar modal ao clicar fora
+        document.getElementById('paymentModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('paymentModal')) {
+                closePaymentModal();
+            }
+        });
+    </script>
+</body>
+</html>
