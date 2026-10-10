@@ -14,7 +14,8 @@
 #define MAX_HISTORY 1000
 
 typedef struct {
-    char user_input[2048];\n    char ai_response[2048];
+    char user_input[2048];
+    char ai_response[2048];
 } Message;
 
 typedef struct {
@@ -77,8 +78,6 @@ const char *generate_response(const char *user_input) {
     char lower_input[1024];
     strcpy(lower_input, user_input);
     to_lowercase(lower_input);
-
-    char *memory = get_memory_context();
 
     if (strstr(lower_input, "seu nome") || strstr(lower_input, "quem é você")) {
         snprintf(response, sizeof(response), 
@@ -158,7 +157,7 @@ void send_http_response(int client_socket, const char *json_response) {
         "%s",
         strlen(json_response), json_response);
     
-    send(client->socket, http_response, strlen(http_response), 0);
+    send(client_socket, http_response, strlen(http_response), 0);
 }
 
 void send_http_file(int client_socket, const char *filename, const char *content_type) {
@@ -241,6 +240,8 @@ void handle_client(void *arg) {
 
     if (strstr(buffer, "GET / ") || strstr(buffer, "GET /index.html")) {
         send_http_file(client->socket, "index.html", "text/html; charset=utf-8");
+    } else if (strstr(buffer, "GET /payment") || strstr(buffer, "GET /pricing")) {
+        send_http_file(client->socket, "payment.html", "text/html; charset=utf-8");
     } else if (strstr(buffer, "GET /styles.css")) {
         send_http_file(client->socket, "styles.css", "text/css");
     } else if (strstr(buffer, "GET /app.js")) {
@@ -339,7 +340,14 @@ int main() {
         return 1;
     }
 
-    printf("🚀 Servidor Olympus AI rodando em http://localhost:%d\n", PORT);
+    printf("===========================================\n");
+    printf("🚀 Servidor Olympus AI v1.0\n");
+    printf("===========================================\n");
+    printf("✅ Rodando em http://localhost:%d\n", PORT);
+    printf("🏠 Home: http://localhost:%d/\n", PORT);
+    printf("💳 Premium: http://localhost:%d/payment\n", PORT);
+    printf("⚕️  Health: http://localhost:%d/api/health\n", PORT);
+    printf("===========================================\n");
     printf("Aguardando conexões...\n\n");
 
     while (1) {
